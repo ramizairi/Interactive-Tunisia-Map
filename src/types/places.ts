@@ -1,14 +1,8 @@
 export type PlaceCategory =
-  | "hotel"
   | "restaurant"
-  | "cafe"
   | "market"
   | "producer"
-  | "artisan"
-  | "attraction"
-  | "shopping"
-  | "beach"
-  | "other";
+  | "artisan";
 
 export type Coordinates = [longitude: number, latitude: number];
 

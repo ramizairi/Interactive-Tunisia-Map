@@ -50,6 +50,10 @@ export function normalizePlace(doc: PlaceDocument): Place | null {
 
   const category = normalizeCategory(doc.category);
 
+  if (!category) {
+    return null;
+  }
+
   return {
     id: String(doc._id),
     name: doc.name,
@@ -130,9 +134,9 @@ export function buildPlacesQuery(options: {
   return filters.length === 1 ? filters[0] : { $and: filters };
 }
 
-function normalizeCategory(category: unknown): PlaceCategory {
+function normalizeCategory(category: unknown): PlaceCategory | null {
   if (typeof category !== "string") {
-    return "other";
+    return null;
   }
 
   const normalized = category
@@ -141,7 +145,7 @@ function normalizeCategory(category: unknown): PlaceCategory {
     .replace(/[\u0300-\u036f]/g, "");
   return supportedCategoryIds.has(normalized as PlaceCategory) && normalized !== "all"
     ? (normalized as PlaceCategory)
-    : "other";
+    : null;
 }
 
 function extractCoordinates(doc: PlaceDocument): Coordinates | null {
